@@ -34,6 +34,16 @@ const dx_utils = {
      */
     async sleep(ms = 0) {
         return await new Promise(resolve => setTimeout(resolve, ms));
-    }
+    },
+    /**
+     * Returns the value as a float with [decimal_points] number of decimals
+     * @param value
+     * @param decimal_points
+     * @returns {number}
+     */
+    getValueToDecimal(value = 0,decimal_points = 0) {
+    const factor = Math.pow(10,decimal_points);
+    return Math.round(factor*value)/factor;
+}
 }
 module.exports = dx_utils;
