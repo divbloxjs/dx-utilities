@@ -16,15 +16,15 @@ const dx_utils = {
         });
     },
     /**
-     * Returns a date that can be used with MySQL
-     * @param current_date
+     * Returns a date string that can be used with MySQL
+     * @param current_date_utc
      * @param seconds_to_add
      * @return {string}
      */
-    getDateStringFromCurrentDate(current_date = new Date(),seconds_to_add = 0) {
-        let current_date_local = new Date(current_date);
-        current_date_local.setSeconds(current_date_local.getSeconds() + seconds_to_add);
-        const date_from_current_str = current_date_local.toISOString().replace('T', ' ');
+    getDateStringFromCurrentDate(current_date_utc = new Date(),seconds_to_add = 0) {
+        let current_date_obj = new Date(current_date_utc);
+        current_date_obj.setSeconds(current_date_obj.getSeconds() + seconds_to_add);
+        const date_from_current_str = current_date_obj.toISOString().replace('T', ' ');
         return date_from_current_str.substring(0,date_from_current_str.length - 5);
     },
     /**
