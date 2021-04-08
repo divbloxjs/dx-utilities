@@ -12,7 +12,7 @@ const dx_utils = {
             output: process.stdout
         });
         return await new Promise(resolve => {
-            rl.question(question+" ", answer => resolve(answer))
+            rl.question(question+" ", answer => {rl.close();resolve(answer)})
         });
     },
     /**
