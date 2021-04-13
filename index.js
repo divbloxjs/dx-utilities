@@ -37,9 +37,9 @@ const dx_utils = {
      * @returns {number}
      */
     getValueToDecimal(value = 0,decimal_points = 0) {
-    const factor = Math.pow(10,decimal_points);
-    return Math.round(factor*value)/factor;
-},
+        const factor = Math.pow(10,decimal_points);
+        return Math.round(factor*value)/factor;
+    },
     //#endregion
 
     //#region Strings and string manipulation
