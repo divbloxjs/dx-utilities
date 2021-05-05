@@ -1,10 +1,10 @@
 const readline = require("readline");
 
-const dx_utils = {
+const dxUtils = {
     //#region Command line functionality
     /**
      * Returns the user's input to the given command line question
-     * @param question
+     * @param {string} question
      * @returns {Promise<unknown>}
      */
     async getCommandLineInput(question = "") {
@@ -21,7 +21,7 @@ const dx_utils = {
     //#region Timers
     /**
      * Sleeps for ms seconds when called with the await keyword
-     * @param ms
+     * @param {number} ms
      * @returns {Promise<unknown>}
      */
     async sleep(ms = 0) {
@@ -31,40 +31,75 @@ const dx_utils = {
 
     //#region Numbers and math related
     /**
-     * Returns the value as a float with [decimal_points] number of decimals
-     * @param value
-     * @param decimal_points
+     * Returns the value as a float with [decimalPoints] number of decimals
+     * @param {number} value
+     * @param {number} decimalPoints
      * @returns {number}
      */
-    getValueToDecimal(value = 0,decimal_points = 0) {
-        const factor = Math.pow(10,decimal_points);
-        return Math.round(factor*value)/factor;
+    getValueToDecimal(value = 0, decimalPoints = 0) {
+        const factor = Math.pow(10, decimalPoints);
+        return Math.round(factor * value) / factor;
     },
     //#endregion
 
     //#region Strings and string manipulation
     /**
      * Returns a date string that can be used with MySQL
-     * @param current_date_utc
-     * @param seconds_to_add
+     * @param {Date} currentDateUtc
+     * @param {number} secondsToAdd
      * @return {string}
      */
-    getDateStringFromCurrentDate(current_date_utc = new Date(),seconds_to_add = 0) {
-        let current_date_obj = new Date(current_date_utc);
-        current_date_obj.setSeconds(current_date_obj.getSeconds() + seconds_to_add);
-        const date_from_current_str = current_date_obj.toISOString().replace('T', ' ');
-        return date_from_current_str.substring(0,date_from_current_str.length - 5);
+    getDateStringFromCurrentDate(currentDateUtc = new Date(), secondsToAdd = 0) {
+        let currentDate = new Date(currentDateUtc);
+        currentDate.setSeconds(currentDate.getSeconds() + secondsToAdd);
+        const dateFromCurrent = currentDate.toISOString().replace('T', ' ');
+        return dateFromCurrent.substring(0,dateFromCurrent.length - 5);
     },
 
     /**
      * Splits a camel case string into a lower case string, separated with a splitter character
-     * @param camel_case_str The string to split
-     * @param splitter The charactor to use as the splitter "_" or "-", etc
+     * @param {string} camelCase The string to split
+     * @param {string} splitter The charactor to use as the splitter "" or "-", etc
      * @returns {string} The splitted string in lower case
      */
-    getCamelCaseSplittedToLowerCase(camel_case_str = '',splitter = "_") {
-        return camel_case_str.replace(/([a-z0-9])([A-Z0-9])/g, '$1'+splitter+'$2').toLowerCase();
+    getCamelCaseSplittedToLowerCase(camelCase = '', splitter = "") {
+        return camelCase.replace(/([a-z0-9])([A-Z0-9])/g, '$1'+splitter+'$2').toLowerCase();
+    },
+
+    /**
+     * Converts a string, separated by the splitter character to a camelCase string
+     * @param {string} lowerCase The string to convert
+     * @param {string} splitter The character to use as the splitter "" or "-", etc
+     * @returns {string} The converted string in camelCase
+     */
+    convertLowerCaseToCamelCase(lowerCase = '', splitter = "_") {
+        const components = lowerCase.split(splitter);
+        let returnString = "";
+        for (let componentCount = 0; componentCount < components.length; componentCount++) {
+            if (componentCount === 0) {
+                returnString += components[componentCount].toLowerCase();
+            } else {
+                returnString += components[componentCount].charAt(0).toUpperCase() + components[componentCount].slice(1).toLowerCase();
+            }
+        }
+        return returnString;
+    },
+
+    /**
+     * Converts a string, separated by the splitter character to a PascalCase string
+     * @param {string} lowerCase The string to convert
+     * @param {string} splitter The character to use as the splitter "" or "-", etc
+     * @returns {string} The converted string in PascalCase
+     */
+    convertLowerCaseToPascalCase(lowerCase = '', splitter = "_") {
+        const components = lowerCase.split(splitter);
+        let returnString = "";
+        for (let componentCount = 0; componentCount < components.length; componentCount++) {
+            returnString += components[componentCount].charAt(0).toUpperCase() + components[componentCount].slice(1).toLowerCase();
+        }
+        return returnString;
     }
     //#endregion
 }
-module.exports = dx_utils;
+
+module.exports = dxUtils;
