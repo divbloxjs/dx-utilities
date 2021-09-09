@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JohanGriesel/dx-utils.git"
+    "url": "git+https://github.com/divbloxjs/dx-utils.git"
   },
   "keywords": [
     "Divblox",
@@ -17,7 +17,7 @@
   "author": "Johan Griesel, johan@stratusolve.com (Stratusolve (Pty) Ltd)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/JohanGriesel/dx-utils/issues"
+    "url": "https://github.com/divbloxjs/dx-utils/issues"
   },
-  "homepage": "https://github.com/JohanGriesel/dx-utils#readme"
+  "homepage": "https://github.com/divbloxjs/dx-utils#readme"
 }
