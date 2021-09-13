@@ -1,4 +1,6 @@
 const readline = require("readline");
+const { exec } = require("child_process");
+
 
 const dxUtils = {
     //#region Command line functionality
@@ -14,6 +16,11 @@ const dxUtils = {
         });
         return await new Promise(resolve => {
             rl.question(question+" ", answer => {rl.close();resolve(answer)})
+        });
+    },
+    async executeCommand(command) {
+        return await new Promise(resolve => {
+            exec(command, output => {resolve(output)})
         });
     },
     //#endregion
