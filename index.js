@@ -22,8 +22,6 @@ const dxUtils = {
     async executeCommand(command) {
         try {
             const { stdout, stderr } = await exec(command);
-            console.log('stdout:', stdout);
-            console.log('stderr:', stderr);
             return { stdout, stderr };
         } catch (e) {
             console.error(e); // should contain code (exit code) and signal (that caused the termination).
