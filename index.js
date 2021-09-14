@@ -1,5 +1,6 @@
 const readline = require("readline");
-const { exec } = require("child_process");
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
 
 const dxUtils = {
@@ -19,9 +20,14 @@ const dxUtils = {
         });
     },
     async executeCommand(command) {
-        return await new Promise(resolve => {
-            exec(command, output => {resolve(output)})
-        });
+        try {
+            const { stdout, stderr } = await exec(command);
+            console.log('stdout:', stdout);
+            console.log('stderr:', stderr);
+            return { stdout, stderr };
+        } catch (e) {
+            console.error(e); // should contain code (exit code) and signal (that caused the termination).
+        }
     },
     //#endregion
 
