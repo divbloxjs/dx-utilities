@@ -16,6 +16,11 @@ function runTests() {
     } else {
         console.log("convertLowerCaseToPascalCase passed");
     }
+    const color = dxUtils.commandLineColors.foregroundGreen+
+        dxUtils.commandLineColors.backgroundBlack+
+        dxUtils.commandLineColors.bright;
+    dxUtils.outputFormattedLog("A test message",color);
+    console.log("Test formatting reset");
 }
 
 runTests();

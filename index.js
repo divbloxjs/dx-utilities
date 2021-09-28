@@ -2,9 +2,37 @@ const readline = require("readline");
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
-
 const dxUtils = {
     //#region Command line functionality
+    /**
+     * A color reference to be used with dxUtils.outputFormattedLog()
+     */
+    commandLineColors: {
+        reset: "\x1b[0m",
+        bright: "\x1b[1m",
+        dim: "\x1b[2m",
+        underscore: "\x1b[4m",
+        blink: "\x1b[5m",
+        reverse: "\x1b[7m",
+        hidden: "\x1b[8m",
+        foregroundBlack: "\x1b[30m",
+        foregroundRed: "\x1b[31m",
+        foregroundGreen: "\x1b[32m",
+        foregroundYellow: "\x1b[33m",
+        foregroundBlue: "\x1b[34m",
+        foregroundMagenta: "\x1b[35m",
+        foregroundCyan: "\x1b[36m",
+        foregroundWhite: "\x1b[37m",
+        backgroundBlack: "\x1b[40m",
+        backgroundRed: "\x1b[41m",
+        backgroundGreen: "\x1b[42m",
+        backgroundYellow: "\x1b[43m",
+        backgroundBlue: "\x1b[44m",
+        backgroundMagenta: "\x1b[45m",
+        backgroundCyan: "\x1b[46m",
+        backgroundWhite: "\x1b[47m"
+    },
+
     /**
      * Returns the user's input to the given command line question
      * @param {string} question
@@ -19,6 +47,12 @@ const dxUtils = {
             rl.question(question+" ", answer => {rl.close();resolve(answer)})
         });
     },
+
+    /**
+     * Executes a command on the terminal
+     * @param command The command to execute
+     * @return {Promise<{stdout, stderr}>}
+     */
     async executeCommand(command) {
         try {
             const { stdout, stderr } = await exec(command);
@@ -26,6 +60,15 @@ const dxUtils = {
         } catch (e) {
             console.error(e); // should contain code (exit code) and signal (that caused the termination).
         }
+    },
+
+    /**
+     * Prints a log to the console, using the provided formatting
+     * @param message The message to print
+     * @param colorReference The color reference to use. See dxUtils.commandLineColors
+     */
+    outputFormattedLog(message, colorReference) {
+        console.log(colorReference+'%s'+this.commandLineColors.reset, message);
     },
     //#endregion
 
