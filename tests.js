@@ -21,6 +21,17 @@ function runTests() {
         dxUtils.commandLineColors.bright;
     dxUtils.outputFormattedLog("A test message",color);
     console.log("Test formatting reset");
+
+    dxUtils.printFormattedMessage("A test heading message", dxUtils.commandLineFormats.heading, dxUtils.commandLineFormats.warning);
+    dxUtils.printFormattedMessage("A test sub heading message", dxUtils.commandLineFormats.subHeading, dxUtils.commandLineFormats.info);
+    dxUtils.printFormattedMessage("A test default message", dxUtils.commandLineFormats.default, dxUtils.commandLineFormats.danger);
+
+    dxUtils.printHeadingMessage("Preformatted heading message");
+    dxUtils.printSubHeadingMessage("Preformatted sub heading message");
+    dxUtils.printErrorMessage("Preformatted error message");
+    dxUtils.printWarningMessage("Preformatted warning message");
+    dxUtils.printSuccessMessage("Preformatted success message");
+    dxUtils.printInfoMessage("Preformatted info message");
 }
 
 runTests();

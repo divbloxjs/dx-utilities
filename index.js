@@ -34,6 +34,70 @@ const dxUtils = {
     },
 
     /**
+     * A more readable and friendly way to present colors for printing certain cases to the console
+     */
+    commandLineFormats: {
+        heading: "heading",
+        subHeading: "subHeading",
+        default: "default",
+        primary: "primary",
+        secondary: "secondary",
+        success: "success",
+        danger: "danger",
+        warning: "warning",
+        info: "info",
+        light: "light",
+        dark: "dark",
+    },
+
+    /**
+     * Returns a combination of colors and setup for certain output types
+     * @param {[string]} formats An array of commandLineFormats
+     * @return {string} The final format to be applied to the text being printed in the console
+     */
+    getCommandLineFormat(formats = []) {
+        let finalFormat = this.commandLineColors.reset;
+        for (const format of formats) {
+            switch (format) {
+                case this.commandLineFormats.heading:
+                    finalFormat += this.commandLineColors.bright;
+                    break;
+                case this.commandLineFormats.subHeading:
+                    finalFormat += this.commandLineColors.dim;
+                    break;
+                case this.commandLineFormats.default:
+                    finalFormat += this.commandLineColors.reset;
+                    break;
+                case this.commandLineFormats.primary:
+                    finalFormat += this.commandLineColors.foregroundBlue;
+                    break;
+                case this.commandLineFormats.secondary:
+                    finalFormat += this.commandLineColors.foregroundCyan;
+                    break;
+                case this.commandLineFormats.success:
+                    finalFormat += this.commandLineColors.foregroundGreen;
+                    break;
+                case this.commandLineFormats.danger:
+                    finalFormat += this.commandLineColors.foregroundRed;
+                    break;
+                case this.commandLineFormats.warning:
+                    finalFormat += this.commandLineColors.foregroundYellow;
+                    break;
+                case this.commandLineFormats.info:
+                    finalFormat += this.commandLineColors.foregroundMagenta;
+                    break;
+                case this.commandLineFormats.light:
+                    finalFormat += this.commandLineColors.foregroundWhite;
+                    break;
+                case this.commandLineFormats.dark:
+                    finalFormat += this.commandLineColors.foregroundBlack;
+                    break;
+            }
+        }
+        return finalFormat;
+    },
+
+    /**
      * Returns the user's input to the given command line question
      * @param {string} question
      * @returns {Promise<unknown>}
@@ -69,6 +133,85 @@ const dxUtils = {
      */
     outputFormattedLog(message, colorReference) {
         console.log(colorReference+'%s'+this.commandLineColors.reset, message);
+    },
+
+    /**
+     * Prints a formatted message to the console for the given type and color. Useful when you want to apply consistent
+     * styling to your console messages
+     * @param {string} message The message to print to the console
+     * @param {string} messageType A type defined in dxUtils.commandLineFormats
+     * @param {string} messageColor A color reference defined in dxUtils.commandLineFormats
+     */
+    printFormattedMessage(message = '', messageType = this.commandLineFormats.default, messageColor = this.commandLineFormats.dark) {
+        let lineText = '';
+        for (let i=0; i < process.stdout.columns; i++) {
+            lineText += '-';
+        }
+
+        switch (messageType) {
+            case this.commandLineFormats.heading:
+                this.outputFormattedLog(lineText, this.getCommandLineFormat([messageType, messageColor]));
+                this.outputFormattedLog(message.toUpperCase(), this.getCommandLineFormat([messageType, messageColor]));
+                this.outputFormattedLog(lineText, this.getCommandLineFormat([messageType, messageColor]));
+                break;
+            case this.commandLineFormats.subHeading:
+                this.outputFormattedLog(message, this.getCommandLineFormat([messageType, messageColor]));
+                this.outputFormattedLog(lineText, this.getCommandLineFormat([messageType, messageColor]));
+                break;
+            case this.commandLineFormats.default:
+                this.outputFormattedLog(message, this.getCommandLineFormat([messageType, messageColor]));
+                break;
+            default:
+                this.outputFormattedLog(message, this.getCommandLineFormat([messageType, messageColor]));
+        }
+    },
+
+    /**
+     * A wrapper function for printing a message to the console, formatted as an error
+     * @param {string} message The message to print to the console
+     */
+    printErrorMessage(message = '') {
+        dxUtils.printFormattedMessage(message, this.commandLineFormats.default, this.commandLineFormats.danger);
+    },
+
+    /**
+     * A wrapper function for printing a message to the console, formatted as a warning
+     * @param {string} message The message to print to the console
+     */
+    printWarningMessage(message = '') {
+        dxUtils.printFormattedMessage(message, this.commandLineFormats.default, this.commandLineFormats.warning);
+    },
+
+    /**
+     * A wrapper function for printing a message to the console, formatted as a general info message
+     * @param {string} message The message to print to the console
+     */
+    printInfoMessage(message = '') {
+        dxUtils.printFormattedMessage(message, this.commandLineFormats.default, this.commandLineFormats.info);
+    },
+
+    /**
+     * A wrapper function for printing a message to the console, formatted as a success message
+     * @param {string} message The message to print to the console
+     */
+    printSuccessMessage(message = '') {
+        dxUtils.printFormattedMessage(message, this.commandLineFormats.default, this.commandLineFormats.success);
+    },
+
+    /**
+     * A wrapper function for printing a message to the console, formatted as a heading
+     * @param {string} message The message to print to the console
+     */
+    printHeadingMessage(message = '') {
+        dxUtils.printFormattedMessage(message, this.commandLineFormats.heading, this.commandLineFormats.primary);
+    },
+
+    /**
+     * A wrapper function for printing a message to the console, formatted as a sub heading
+     * @param {string} message The message to print to the console
+     */
+    printSubHeadingMessage(message = '') {
+        dxUtils.printFormattedMessage(message, this.commandLineFormats.subHeading, this.commandLineFormats.secondary);
     },
     //#endregion
 
