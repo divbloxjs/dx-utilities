@@ -48,6 +48,7 @@ const dxUtils = {
         info: "info",
         light: "light",
         dark: "dark",
+        terminal: "terminal"
     },
 
     /**
@@ -91,6 +92,11 @@ const dxUtils = {
                     break;
                 case this.commandLineFormats.dark:
                     finalFormat += this.commandLineColors.foregroundBlack;
+                    break;
+                case this.commandLineFormats.terminal:
+                    finalFormat += this.commandLineColors.bright +
+                        this.commandLineColors.foregroundWhite +
+                        this.commandLineColors.backgroundBlack;
                     break;
             }
         }
@@ -161,6 +167,9 @@ const dxUtils = {
             case this.commandLineFormats.default:
                 this.outputFormattedLog(message, this.getCommandLineFormat([messageType, messageColor]));
                 break;
+            case this.commandLineFormats.terminal:
+                this.outputFormattedLog(": "+message+" ", this.getCommandLineFormat([messageType, messageColor]));
+                break;
             default:
                 this.outputFormattedLog(message, this.getCommandLineFormat([messageType, messageColor]));
         }
@@ -213,6 +222,15 @@ const dxUtils = {
     printSubHeadingMessage(message = '') {
         dxUtils.printFormattedMessage(message, this.commandLineFormats.subHeading, this.commandLineFormats.secondary);
     },
+
+    /**
+     * A wrapper function for printing a message to the console, formatted as a terminal command
+     * @param {string} message The message to print to the console
+     */
+    printTerminalMessage(message = '') {
+        dxUtils.printFormattedMessage(message, this.commandLineFormats.terminal, this.commandLineFormats.terminal);
+    },
+
     //#endregion
 
     //#region Timers

@@ -32,6 +32,7 @@ function runTests() {
     dxUtils.printWarningMessage("Preformatted warning message");
     dxUtils.printSuccessMessage("Preformatted success message");
     dxUtils.printInfoMessage("Preformatted info message");
+    dxUtils.printTerminalMessage("Preformatted terminal message");
 }
 
 runTests();
