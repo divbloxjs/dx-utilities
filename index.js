@@ -94,8 +94,7 @@ const dxUtils = {
                     finalFormat += this.commandLineColors.foregroundBlack;
                     break;
                 case this.commandLineFormats.terminal:
-                    finalFormat += this.commandLineColors.bright +
-                        this.commandLineColors.foregroundWhite +
+                    finalFormat += this.commandLineColors.foregroundWhite +
                         this.commandLineColors.backgroundBlack;
                     break;
             }
