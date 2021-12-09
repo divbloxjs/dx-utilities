@@ -33,6 +33,15 @@ function runTests() {
     dxUtils.printSuccessMessage("Preformatted success message");
     dxUtils.printInfoMessage("Preformatted info message");
     dxUtils.printTerminalMessage("Preformatted terminal message");
+
+    let testEmails = ["notanemail.com", "workingexample@stackabuse.com", "example@yale.edu.com",
+        "johndoe@gmail.com", "john.doe@gmail.com",  "johndoe@gmail.co",  "johndoe@gmail.co.uk",
+        "johndoe@gmail.app",  "Johndoe@gmail.com",  "johndoe@GMAILcom", "test@test.123",
+        "TeSt@teST.123", "johndoe@GMAIL.com"];
+
+    testEmails.forEach((address) => {
+        console.log("Email: "+address+": "+dxUtils.validateEmailAddress(address));
+    });
 }
 
 runTests();
