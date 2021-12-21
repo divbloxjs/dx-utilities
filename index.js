@@ -313,10 +313,26 @@ const dxUtils = {
         }
         return returnString;
     },
+
+    /**
+     * Returns a random string of the length specified
+     * @param {number} length The length of the required string
+     * @return {string} The randomly generated string
+     */
+    generateRandomString(length = 8) {
+        let result = '';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+        for (let i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+
+        return result;
+    },
     //#endregion
 
     //#region Validators & Regex's
-    
+
     /**
      * Validates a given email address against a comprehensive regex
      * @param {string} emailAddress The email address to validate

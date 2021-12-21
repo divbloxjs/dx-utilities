@@ -42,6 +42,8 @@ function runTests() {
     testEmails.forEach((address) => {
         console.log("Email: "+address+": "+dxUtils.validateEmailAddress(address));
     });
+
+    console.log("Random string: "+dxUtils.generateRandomString(4));
 }
 
 runTests();
