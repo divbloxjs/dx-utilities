@@ -258,7 +258,7 @@ const dxUtils = {
 
     //#region Strings and string manipulation
     /**
-     * Returns a date string that can be used with MySQL
+     * Returns a utc date string that can be used with MySQL
      * @param {Date} currentDateUtc
      * @param {number} secondsToAdd
      * @return {string}
@@ -266,7 +266,25 @@ const dxUtils = {
     getDateStringFromCurrentDate(currentDateUtc = new Date(), secondsToAdd = 0) {
         let currentDate = new Date(currentDateUtc);
         currentDate.setSeconds(currentDate.getSeconds() + secondsToAdd);
+
         const dateFromCurrent = currentDate.toISOString().replace('T', ' ');
+
+        return dateFromCurrent.substring(0,dateFromCurrent.length - 5);
+    },
+
+    /**
+     * Returns a local date string that can be used with MySQL
+     * @param {Date} currentDateLocal
+     * @param {number} secondsToAdd
+     * @return {string}
+     */
+    getLocalDateStringFromCurrentDate(currentDateLocal = new Date(), secondsToAdd = 0) {
+        let currentDate = new Date(currentDateLocal);
+        currentDate.setSeconds(currentDate.getSeconds() + secondsToAdd);
+        currentDate.setMinutes(currentDate.getMinutes() - currentDate.getTimezoneOffset());
+
+        const dateFromCurrent = currentDate.toISOString().replace('T', ' ');
+
         return dateFromCurrent.substring(0,dateFromCurrent.length - 5);
     },
 

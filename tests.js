@@ -44,6 +44,14 @@ function runTests() {
     });
 
     console.log("Random string: "+dxUtils.generateRandomString(4));
+
+    console.log("Current utc date: "+dxUtils.getDateStringFromCurrentDate());
+    process.env.TZ = 'Africa/Johannesburg';
+    console.log("Current local date: "+dxUtils.getLocalDateStringFromCurrentDate());
+    process.env.TZ = 'America/Ensenada';
+    console.log("Current local date: "+dxUtils.getLocalDateStringFromCurrentDate());
+    process.env.TZ = 'Asia/Almaty';
+    console.log("Current local date: "+dxUtils.getLocalDateStringFromCurrentDate());
 }
 
 runTests();
