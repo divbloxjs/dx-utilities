@@ -1,23 +1,23 @@
 {
-  "name": "dx-utilities",
-  "version": "1.0.0",
-  "description": "The Divblox utilities package provides a bunch of useful functions that are primarily used within the Divblox nodejs library. These functions can however be freely used in any other nodejs project",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/divbloxjs/dx-utilities.git"
-  },
-  "keywords": [
-    "Divblox",
-    "dx-utilities"
-  ],
-  "author": "Johan Griesel, johan@divblox.com - Divblox (Pty) Ltd",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/divbloxjs/dx-utilities/issues"
-  },
-  "homepage": "https://github.com/divbloxjs/dx-utilities#readme"
+    "name": "dx-utilities",
+    "version": "1.0.1",
+    "description": "The Divblox utilities package provides a bunch of useful functions that are primarily used within the Divblox nodejs library. These functions can however be freely used in any other nodejs project",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/divbloxjs/dx-utilities.git"
+    },
+    "keywords": [
+        "Divblox",
+        "dx-utilities"
+    ],
+    "author": "Johan Griesel, johan@divblox.com - Divblox (Pty) Ltd",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/divbloxjs/dx-utilities/issues"
+    },
+    "homepage": "https://github.com/divbloxjs/dx-utilities#readme"
 }
