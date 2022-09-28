@@ -1,6 +1,6 @@
 const readline = require("readline");
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+const util = require("util");
+const exec = util.promisify(require("child_process").exec);
 
 const dxUtils = {
     //#region Command line functionality
@@ -30,7 +30,7 @@ const dxUtils = {
         backgroundBlue: "\x1b[44m",
         backgroundMagenta: "\x1b[45m",
         backgroundCyan: "\x1b[46m",
-        backgroundWhite: "\x1b[47m"
+        backgroundWhite: "\x1b[47m",
     },
 
     /**
@@ -48,7 +48,7 @@ const dxUtils = {
         info: "info",
         light: "light",
         dark: "dark",
-        terminal: "terminal"
+        terminal: "terminal",
     },
 
     /**
@@ -94,8 +94,7 @@ const dxUtils = {
                     finalFormat += this.commandLineColors.foregroundBlack;
                     break;
                 case this.commandLineFormats.terminal:
-                    finalFormat += this.commandLineColors.foregroundWhite +
-                        this.commandLineColors.backgroundBlack;
+                    finalFormat += this.commandLineColors.foregroundWhite + this.commandLineColors.backgroundBlack;
                     break;
             }
         }
@@ -110,10 +109,13 @@ const dxUtils = {
     async getCommandLineInput(question = "") {
         const rl = readline.createInterface({
             input: process.stdin,
-            output: process.stdout
+            output: process.stdout,
         });
-        return await new Promise(resolve => {
-            rl.question(question+" ", answer => {rl.close();resolve(answer)})
+        return await new Promise((resolve) => {
+            rl.question(question + " ", (answer) => {
+                rl.close();
+                resolve(answer);
+            });
         });
     },
 
@@ -137,7 +139,7 @@ const dxUtils = {
      * @param colorReference The color reference to use. See dxUtils.commandLineColors
      */
     outputFormattedLog(message, colorReference) {
-        console.log(colorReference+'%s'+this.commandLineColors.reset, message);
+        console.log(colorReference + "%s" + this.commandLineColors.reset, message);
     },
 
     /**
@@ -147,10 +149,14 @@ const dxUtils = {
      * @param {string} messageType A type defined in dxUtils.commandLineFormats
      * @param {string} messageColor A color reference defined in dxUtils.commandLineFormats
      */
-    printFormattedMessage(message = '', messageType = this.commandLineFormats.default, messageColor = this.commandLineFormats.dark) {
-        let lineText = '';
-        for (let i=0; i < process.stdout.columns; i++) {
-            lineText += '-';
+    printFormattedMessage(
+        message = "",
+        messageType = this.commandLineFormats.default,
+        messageColor = this.commandLineFormats.dark
+    ) {
+        let lineText = "";
+        for (let i = 0; i < process.stdout.columns; i++) {
+            lineText += "-";
         }
 
         switch (messageType) {
@@ -167,7 +173,7 @@ const dxUtils = {
                 this.outputFormattedLog(message, this.getCommandLineFormat([messageType, messageColor]));
                 break;
             case this.commandLineFormats.terminal:
-                this.outputFormattedLog(": "+message+" ", this.getCommandLineFormat([messageType, messageColor]));
+                this.outputFormattedLog(": " + message + " ", this.getCommandLineFormat([messageType, messageColor]));
                 break;
             default:
                 this.outputFormattedLog(message, this.getCommandLineFormat([messageType, messageColor]));
@@ -178,7 +184,7 @@ const dxUtils = {
      * A wrapper function for printing a message to the console, formatted as an error
      * @param {string} message The message to print to the console
      */
-    printErrorMessage(message = '') {
+    printErrorMessage(message = "") {
         dxUtils.printFormattedMessage(message, this.commandLineFormats.default, this.commandLineFormats.danger);
     },
 
@@ -186,7 +192,7 @@ const dxUtils = {
      * A wrapper function for printing a message to the console, formatted as a warning
      * @param {string} message The message to print to the console
      */
-    printWarningMessage(message = '') {
+    printWarningMessage(message = "") {
         dxUtils.printFormattedMessage(message, this.commandLineFormats.default, this.commandLineFormats.warning);
     },
 
@@ -194,7 +200,7 @@ const dxUtils = {
      * A wrapper function for printing a message to the console, formatted as a general info message
      * @param {string} message The message to print to the console
      */
-    printInfoMessage(message = '') {
+    printInfoMessage(message = "") {
         dxUtils.printFormattedMessage(message, this.commandLineFormats.default, this.commandLineFormats.info);
     },
 
@@ -202,7 +208,7 @@ const dxUtils = {
      * A wrapper function for printing a message to the console, formatted as a success message
      * @param {string} message The message to print to the console
      */
-    printSuccessMessage(message = '') {
+    printSuccessMessage(message = "") {
         dxUtils.printFormattedMessage(message, this.commandLineFormats.default, this.commandLineFormats.success);
     },
 
@@ -210,7 +216,7 @@ const dxUtils = {
      * A wrapper function for printing a message to the console, formatted as a heading
      * @param {string} message The message to print to the console
      */
-    printHeadingMessage(message = '') {
+    printHeadingMessage(message = "") {
         dxUtils.printFormattedMessage(message, this.commandLineFormats.heading, this.commandLineFormats.primary);
     },
 
@@ -218,7 +224,7 @@ const dxUtils = {
      * A wrapper function for printing a message to the console, formatted as a sub heading
      * @param {string} message The message to print to the console
      */
-    printSubHeadingMessage(message = '') {
+    printSubHeadingMessage(message = "") {
         dxUtils.printFormattedMessage(message, this.commandLineFormats.subHeading, this.commandLineFormats.secondary);
     },
 
@@ -226,7 +232,7 @@ const dxUtils = {
      * A wrapper function for printing a message to the console, formatted as a terminal command
      * @param {string} message The message to print to the console
      */
-    printTerminalMessage(message = '') {
+    printTerminalMessage(message = "") {
         dxUtils.printFormattedMessage(message, this.commandLineFormats.terminal, this.commandLineFormats.terminal);
     },
 
@@ -239,7 +245,7 @@ const dxUtils = {
      * @returns {Promise<unknown>}
      */
     async sleep(ms = 0) {
-        return await new Promise(resolve => setTimeout(resolve, ms));
+        return await new Promise((resolve) => setTimeout(resolve, ms));
     },
     //#endregion
 
@@ -267,9 +273,9 @@ const dxUtils = {
         let currentDate = new Date(currentDateUtc);
         currentDate.setSeconds(currentDate.getSeconds() + secondsToAdd);
 
-        const dateFromCurrent = currentDate.toISOString().replace('T', ' ');
+        const dateFromCurrent = currentDate.toISOString().replace("T", " ");
 
-        return dateFromCurrent.substring(0,dateFromCurrent.length - 5);
+        return dateFromCurrent.substring(0, dateFromCurrent.length - 5);
     },
 
     /**
@@ -283,9 +289,9 @@ const dxUtils = {
         currentDate.setSeconds(currentDate.getSeconds() + secondsToAdd);
         currentDate.setMinutes(currentDate.getMinutes() - currentDate.getTimezoneOffset());
 
-        const dateFromCurrent = currentDate.toISOString().replace('T', ' ');
+        const dateFromCurrent = currentDate.toISOString().replace("T", " ");
 
-        return dateFromCurrent.substring(0,dateFromCurrent.length - 5);
+        return dateFromCurrent.substring(0, dateFromCurrent.length - 5);
     },
 
     /**
@@ -294,8 +300,8 @@ const dxUtils = {
      * @param {string} splitter The charactor to use as the splitter "" or "-", etc
      * @returns {string} The splitted string in lower case
      */
-    getCamelCaseSplittedToLowerCase(camelCase = '', splitter = "") {
-        return camelCase.replace(/([a-z0-9])([A-Z0-9])/g, '$1'+splitter+'$2').toLowerCase();
+    getCamelCaseSplittedToLowerCase(camelCase = "", splitter = "") {
+        return camelCase.replace(/([a-z0-9])([A-Z0-9])/g, "$1" + splitter + "$2").toLowerCase();
     },
 
     /**
@@ -304,14 +310,16 @@ const dxUtils = {
      * @param {string} splitter The character to use as the splitter "" or "-", etc
      * @returns {string} The converted string in camelCase
      */
-    convertLowerCaseToCamelCase(lowerCase = '', splitter = "_") {
+    convertLowerCaseToCamelCase(lowerCase = "", splitter = "_") {
         const components = lowerCase.split(splitter);
         let returnString = "";
         for (let componentCount = 0; componentCount < components.length; componentCount++) {
             if (componentCount === 0) {
                 returnString += components[componentCount].toLowerCase();
             } else {
-                returnString += components[componentCount].charAt(0).toUpperCase() + components[componentCount].slice(1).toLowerCase();
+                returnString +=
+                    components[componentCount].charAt(0).toUpperCase() +
+                    components[componentCount].slice(1).toLowerCase();
             }
         }
         return returnString;
@@ -323,11 +331,12 @@ const dxUtils = {
      * @param {string} splitter The character to use as the splitter "" or "-", etc
      * @returns {string} The converted string in PascalCase
      */
-    convertLowerCaseToPascalCase(lowerCase = '', splitter = "_") {
+    convertLowerCaseToPascalCase(lowerCase = "", splitter = "_") {
         const components = lowerCase.split(splitter);
         let returnString = "";
         for (let componentCount = 0; componentCount < components.length; componentCount++) {
-            returnString += components[componentCount].charAt(0).toUpperCase() + components[componentCount].slice(1).toLowerCase();
+            returnString +=
+                components[componentCount].charAt(0).toUpperCase() + components[componentCount].slice(1).toLowerCase();
         }
         return returnString;
     },
@@ -338,14 +347,28 @@ const dxUtils = {
      * @return {string} The randomly generated string
      */
     generateRandomString(length = 8) {
-        let result = '';
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = "";
+        const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        for (let i = 0; i < length; i++ ) {
+        for (let i = 0; i < length; i++) {
             result += characters.charAt(Math.floor(Math.random() * characters.length));
         }
 
         return result;
+    },
+
+    /**
+     * Determines whether or not a string is a valid json string
+     * @param {string} str The string to check on
+     * @returns {boolean} True if valid
+     */
+    isJsonString(str = "") {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
     },
     //#endregion
 
@@ -357,14 +380,16 @@ const dxUtils = {
      * @return {boolean} True if a valid email address, false otherwise
      */
     validateEmailAddress(emailAddress) {
-        const regex = new RegExp("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\n" +
-            "\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\n" +
-            "\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:\n" +
-            "(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])");
+        const regex = new RegExp(
+            "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\n" +
+                '\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\n' +
+                "\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:\n" +
+                "(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])"
+        );
 
         return regex.test(emailAddress);
     },
     //#endregion
-}
+};
 
 module.exports = dxUtils;
