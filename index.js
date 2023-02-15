@@ -390,6 +390,53 @@ const dxUtils = {
         return regex.test(emailAddress);
     },
     //#endregion
+
+    //#region Object validation
+    /**
+     * Checks whether or not the provided input is a valid JS object or not
+     * Valid if input is of type object, but not an array or null.
+     * @param {*} objectToCheck Input value to validate
+     * @param {boolean} checkNotEmpty Flag to add a further check of whether the object is empty or not
+     * @returns {boolean} True if conditions are met, false otherwise
+     */
+    isValidObject(objectToCheck = null, checkNotEmpty = false) {
+        let isValid = false;
+        if (
+            typeof objectToCheck === "object" &&
+            objectToCheck.constructor === Object &&
+            !Array.isArray(objectToCheck) &&
+            objectToCheck !== null
+        ) {
+            isValid = true;
+
+            if (checkNotEmpty && Object.values(objectToCheck).length === 0) {
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    },
+    /**
+     * Check whether or not a given variable is an empty object
+     * @param {*} objectToCheck The object to validate
+     * @returns {boolean} True if empty object, false otherwise
+     */
+    isEmptyObject(objectToCheck = null) {
+        let isValid = false;
+        if (
+            typeof objectToCheck === "object" &&
+            objectToCheck.constructor === Object &&
+            !Array.isArray(objectToCheck) &&
+            objectToCheck !== null
+        ) {
+            if (Object.values(objectToCheck).length === 0) {
+                isValid = true;
+            }
+        }
+
+        return isValid;
+    },
+    //#endregion
 };
 
 module.exports = dxUtils;
