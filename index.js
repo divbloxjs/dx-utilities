@@ -297,11 +297,21 @@ const dxUtils = {
     /**
      * Splits a camel case string into a lower case string, separated with a splitter character
      * @param {string} camelCase The string to split
-     * @param {string} splitter The charactor to use as the splitter "" or "-", etc
+     * @param {string} splitter The character to use as the splitter "" or "-", etc
      * @returns {string} The splitted string in lower case
      */
     getCamelCaseSplittedToLowerCase(camelCase = "", splitter = "") {
         return camelCase.replace(/([a-z0-9])([A-Z0-9])/g, "$1" + splitter + "$2").toLowerCase();
+    },
+
+    /**
+     * Splits a camel case string into an upper case string, separated with a splitter character
+     * @param camelCase The string to split
+     * @param splitter The character to use as the splitter "" or "-", etc
+     * @returns {string} The splitted string in upper case
+     */
+    getCamelCaseSplittedToUpperCase(camelCase = "", splitter = "") {
+        return camelCase.replace(/([a-z0-9])([A-Z0-9])/g, "$1" + splitter + "$2").toUpperCase();
     },
 
     /**
