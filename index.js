@@ -152,7 +152,7 @@ const dxUtils = {
     printFormattedMessage(
         message = "",
         messageType = this.commandLineFormats.default,
-        messageColor = this.commandLineFormats.dark
+        messageColor = this.commandLineFormats.dark,
     ) {
         let lineText = "";
         for (let i = 0; i < process.stdout.columns; i++) {
@@ -352,6 +352,24 @@ const dxUtils = {
     },
 
     /**
+     * Converts a camelCase string to PascalCase
+     * @param {string} camelCase The string to convert
+     * @returns {string} The converted string in PascalCase
+     */
+    convertCamelCaseToPascalCase(camelCase = "") {
+        return camelCase.charAt(0).toUpperCase() + camelCase.slice(1);
+    },
+
+    /**
+     * Converts a PascalCase string to PascalCase
+     * @param {string} pascalCase The string to convert
+     * @returns {string} The converted string in camelCase
+     */
+    convertPascalCaseToCamelCase(pascalCase = "") {
+        return pascalCase.charAt(0).toLowerCase() + pascalCase.slice(1);
+    },
+
+    /**
      * Returns a random string of the length specified
      * @param {number} length The length of the required string
      * @return {string} The randomly generated string
@@ -380,6 +398,19 @@ const dxUtils = {
         }
         return true;
     },
+
+    /**
+     * Checks whether a value is numeric or not (string or number)
+     * @param {*} value
+     * @returns {boolean}
+     */
+    isNumeric(value) {
+        if (Array.isArray(value)) {
+            return false;
+        }
+
+        return !isNaN(value - parseFloat(value));
+    },
     //#endregion
 
     //#region Validators & Regex's
@@ -394,7 +425,7 @@ const dxUtils = {
             "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\n" +
                 '\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\n' +
                 "\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:\n" +
-                "(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])"
+                "(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])",
         );
 
         return regex.test(emailAddress);
@@ -410,18 +441,19 @@ const dxUtils = {
      * @returns {boolean} True if conditions are met, false otherwise
      */
     isValidObject(objectToCheck = null, checkNotEmpty = false) {
-        let isValid = false;
-        if (
-            typeof objectToCheck === "object" &&
-            objectToCheck.constructor === Object &&
-            !Array.isArray(objectToCheck) &&
-            objectToCheck !== null
-        ) {
-            isValid = true;
+        let isValid = true;
 
-            if (checkNotEmpty && Object.values(objectToCheck).length === 0) {
-                isValid = false;
-            }
+        isValid &&= typeof objectToCheck === "object";
+        isValid &&= objectToCheck?.constructor === Object;
+        isValid &&= !Array.isArray(objectToCheck);
+        isValid &&= objectToCheck !== null;
+
+        if (!isValid) {
+            return false;
+        }
+
+        if (checkNotEmpty && Object.values(objectToCheck).length === 0) {
+            isValid &&= false;
         }
 
         return isValid;
@@ -432,17 +464,9 @@ const dxUtils = {
      * @returns {boolean} True if empty object, false otherwise
      */
     isEmptyObject(objectToCheck = null) {
-        let isValid = false;
-        if (
-            typeof objectToCheck === "object" &&
-            objectToCheck.constructor === Object &&
-            !Array.isArray(objectToCheck) &&
-            objectToCheck !== null
-        ) {
-            if (Object.values(objectToCheck).length === 0) {
-                isValid = true;
-            }
-        }
+        let isValid = true;
+
+        isValid &&= this.isValidObject(objectToCheck, true);
 
         return isValid;
     },
