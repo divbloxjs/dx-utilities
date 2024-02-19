@@ -232,27 +232,25 @@ export const isEmptyObject = (objectToCheck = null) => {
 
     isValid &&= this.isValidObject(objectToCheck, true);
 
-        return isValid;
-    },
+    return isValid;
+};
 
-    /**
-     * ONLY works for arrays of primitive values! Checks if arrays are equal - irrespective of order
-     * @param {number|string|boolean[]} a Array
-     * @param {number|string|boolean[]} b Array to compare to
-     *
-     * When comparing object values - it only matches if they literally ref the same value
-     * REF: https://stackoverflow.com/questions/61203925/how-does-the-array-prototype-includes-function-compare-objects
-     * @returns {boolean} Whether the arrays are the same or not
-     */
-    arePrimitiveArraysEqual(a, b) {
-        return (
-            Array.isArray(a) &&
-            Array.isArray(b) &&
-            a.length === b.length &&
-            a.every((val) => b.includes(val)) &&
-            b.every((val) => a.includes(val))
-        );
-    },
-    //#endregion
+/**
+ * ONLY works for arrays of primitive values! Checks if arrays are equal - irrespective of order
+ * @param {number|string|boolean[]} a Array
+ * @param {number|string|boolean[]} b Array to compare to
+ *
+ * When comparing object values - it only matches if they literally ref the same value
+ * REF: https://stackoverflow.com/questions/61203925/how-does-the-array-prototype-includes-function-compare-objects
+ * @returns {boolean} Whether the arrays are the same or not
+ */
+export const arePrimitiveArraysEqual = (a, b) => {
+    return (
+        Array.isArray(a) &&
+        Array.isArray(b) &&
+        a.length === b.length &&
+        a.every((val) => b.includes(val)) &&
+        b.every((val) => a.includes(val))
+    );
 };
 //#endregion
