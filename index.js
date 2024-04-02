@@ -215,8 +215,8 @@ export const isValidObject = (objectToCheck = null, checkNotEmpty = false) => {
         return false;
     }
 
-    if (checkNotEmpty && Object.values(objectToCheck).length === 0) {
-        isValid &&= false;
+    if (checkNotEmpty) { 
+        isValid &&= Object.values(objectToCheck).length === 0 ? true : false;
     }
 
     return isValid;
@@ -230,8 +230,8 @@ export const isValidObject = (objectToCheck = null, checkNotEmpty = false) => {
 export const isEmptyObject = (objectToCheck = null) => {
     let isValid = true;
 
-    isValid &&= this.isValidObject(objectToCheck, true);
-
+    isValid &&= isValidObject(objectToCheck, true);
+    
     return isValid;
 };
 
