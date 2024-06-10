@@ -132,6 +132,48 @@ export const convertPascalCaseToCamelCase = (pascalCase = "") => {
 };
 
 /**
+ * Returns 'Sentence case formatted like this'
+ * Words with valid camelCase, PascalCase, snake_case and kebab-case string.
+ * @param {string} text The string the convert
+ * @param {boolean} capitaliseEveryWord if provided as true, will capitalise EVERY word's first character, not just the first word's first character
+ * @returns {string} Sentence cased string
+ */
+export const getSentenceCase = (text, capitaliseEveryWord = false) => {
+    let sentenceCaseText = text;
+    // Break with a space for every capital letter
+    sentenceCaseText = sentenceCaseText.replaceAll(/([A-Z])/g, " $1");
+    // Break with a space for every '-'
+    sentenceCaseText = sentenceCaseText.replaceAll("-", " ");
+    // Break with a space for every '_'
+    sentenceCaseText = sentenceCaseText.replaceAll("_", " ");
+
+    sentenceCaseText = compactWhitespace(sentenceCaseText);
+
+    if (!capitaliseEveryWord) {
+        // Capitilise only the first word of the string
+        sentenceCaseText = sentenceCaseText.charAt(0).toUpperCase() + sentenceCaseText.slice(1).toLowerCase();
+    } else {
+        // Capitalise the first character of each word
+        let sentenceCaseArr = sentenceCaseText.split(" ");
+
+        sentenceCaseArr = sentenceCaseArr.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+        sentenceCaseText = sentenceCaseArr.join(" ");
+    }
+
+    // Remove double+ spaces if they occurred
+    sentenceCaseText = compactWhitespace(sentenceCaseText);
+
+    return sentenceCaseText;
+};
+
+/**
+ * Compacts all consecutive whitespace into a single ' ' character
+ * @param {string} text
+ * @returns
+ */
+export const compactWhitespace = (text) => text.replaceAll(/\s{2,}/g, " ").trim();
+
+/**
  * Returns a random string of the length specified
  * @param {number} length The length of the required string
  * @return {string} The randomly generated string
@@ -215,7 +257,7 @@ export const isValidObject = (objectToCheck = null, checkNotEmpty = false) => {
         return false;
     }
 
-    if (checkNotEmpty) { 
+    if (checkNotEmpty) {
         isValid &&= Object.values(objectToCheck).length === 0 ? true : false;
     }
 
@@ -231,7 +273,7 @@ export const isEmptyObject = (objectToCheck = null) => {
     let isValid = true;
 
     isValid &&= isValidObject(objectToCheck, true);
-    
+
     return isValid;
 };
 
